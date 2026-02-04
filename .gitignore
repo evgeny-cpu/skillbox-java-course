@@ -1,0 +1,54 @@
+# Файлы, сгенерированные компилятором
+*.class
+
+# Файлы логов
+*.log
+
+# Файлы сборки и запуска
+target/
+build/
+out/
+bin/
+.gradle/
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+
+# Исключения для файлов в папке сборки
+!gradle/wrapper/gradle-wrapper.jar
+
+# Файлы операционных систем
+.DS_Store
+Thumbs.db
+
+# Файлы сред разработки (IDE)
+## IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+## Eclipse
+.settings/
+.classpath
+.project
+
+## NetBeans
+nbproject/
+nb-configuration.xml
+
+# Системные файлы
+*.swp
+*.swo
+*~
+# Для учебных проектов Skillbox (с скомпилированным кодом)
+ module-*/out/
+ module-*/bin/
+# Конфигурационные файлы с персональными данными
+*.properties
+*.config
+application.yml
+application.properties
