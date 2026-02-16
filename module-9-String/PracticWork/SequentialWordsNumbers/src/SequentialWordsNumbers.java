@@ -14,16 +14,19 @@ public class SequentialWordsNumbers {
         StringBuilder builder = new StringBuilder();
         int number = 1;
         int start = 0;
+
         for (int i = 0; i < text.length(); i++) {
             if (text.charAt(i) == ' ') {
-                int end = i + 1;
-                builder.append("(").append(number).append(")").append(" ").append(text.substring(start, end));
-                number++;
-                start = end;
+                int end = i;
+                if (start < end) {
+                    builder.append("(").append(number).append(")").append(" ").append(text.substring(start, end)).append(" ");
+                    number++;
+                    start = i + 1;
+                }
             }
-            if (i == text.length() - 1){
-                builder.append("(").append(number).append(")").append(" ").append(text.substring(start));
-            }
+        }
+        if (start < text.length()) {
+            builder.append("(").append(number).append(")").append(" ").append(text.substring(start));
         }
         return builder.toString();
     }

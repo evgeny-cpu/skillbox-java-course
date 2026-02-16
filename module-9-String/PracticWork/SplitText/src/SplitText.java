@@ -15,9 +15,7 @@ public class SplitText {
         if (text.isEmpty()){
             return "";
         }
-        StringBuilder result = new StringBuilder();
-        String regex = "[^A-Za-z]+";
-        result.append(text.replaceAll(regex,"\n"));
-        return result.toString().trim();
+        String result = text.replaceAll("[^A-Za-z]+","\n");
+        return result.trim();
     }
 }
