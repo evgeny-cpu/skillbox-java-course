@@ -13,13 +13,13 @@ public static char[][] getTwoDimensionalArray(int size) {
 
 Если распечатать массив сформированный методом getTwoDimensionalArray с аргументом 7, то должны получить:
 ```
-x       x
- x     x
-   x  x
-    x
-   x  x
- x      x
-x         x
+x     x
+ x   x
+  x x
+   x
+  x x
+ x   x
+x     x
 ```
 
 ---
