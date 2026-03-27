@@ -6,32 +6,43 @@ public class Main {
         HashSet<String> hashSetCoolNumber = new HashSet<>(arrayCoolNumber);
         TreeSet<String> treeSetCoolNumber = new TreeSet<>(arrayCoolNumber);
 
-        String target = arrayCoolNumber.get(1_500_000);
+        String target = arrayCoolNumber.get(2_500_000);
+
         long start = System.nanoTime();
-        boolean contains = arrayCoolNumber.contains(target);
-        long finish = System.nanoTime() - start;
-        System.out.println("Поиск перебором: " + (contains? "найден" : "не найден") + " поиск занял " + finish);
+        boolean contains = bruteSearch(arrayCoolNumber, target);
+        System.out.println("Поиск перебором: " + (contains ? "найден" : "не найден") + " поиск занял " + (System.nanoTime() - start) + " нс");
 
         Collections.sort(arrayCoolNumber);
         long startBin = System.nanoTime();
-        int containsBin = Collections.binarySearch(arrayCoolNumber,target);
-        long finiBin = System.nanoTime() - startBin;
-        System.out.println("Поиск бинарный: " + (containsBin > 0? "найден" : "не найден") + " поиск занял " + finiBin);
+        boolean containsBin = binarySearch(arrayCoolNumber, target);
+        System.out.println("Поиск бинарный: " + (containsBin ? "найден" : "не найден") + " поиск занял " + (System.nanoTime() - startBin) + " нс");
 
         long startHashSet = System.nanoTime();
-        boolean containsHashSet = hashSetCoolNumber.contains(target);
-        long finishHashSet = System.nanoTime() - startHashSet;
-        System.out.println("Поиск в HashSet: " + (containsHashSet? "найден" : "не найден") + " поиск занял " + finishHashSet);
+        boolean containsHashSet = hashSetSearch(hashSetCoolNumber, target);
+        System.out.println("Поиск в HashSet: " + (containsHashSet ? "найден" : "не найден") + " поиск занял " + (System.nanoTime() - startHashSet) + " нс");
 
         long startTreeSet = System.nanoTime();
-        boolean containsTreeSet = treeSetCoolNumber.contains(target);
-        long finishTreeSet = System.nanoTime() - startTreeSet;
-        System.out.println("Поиск в TreeSet: " + (containsTreeSet? "найден" : "не найден") + " поиск занял " + finishTreeSet);
+        boolean containsTreeSet = treeSetSearch(treeSetCoolNumber, target);
+        System.out.println("Поиск в TreeSet: " + (containsTreeSet ? "найден" : "не найден") + " поиск занял " + (System.nanoTime() - startTreeSet));
 
 
+    }
 
+    public static boolean bruteSearch(ArrayList<String> list, String target) {
+        return list.contains(target);
+    }
 
+    public static boolean binarySearch(ArrayList<String> list, String target) {
+        int x = Collections.binarySearch(list, target);
+        return x >= 0 ? true : false;
+    }
 
+    public static boolean hashSetSearch(HashSet<String> hashSet, String target) {
+        return hashSet.contains(target);
+    }
+
+    public static boolean treeSetSearch(TreeSet<String> treeSet, String target) {
+        return treeSet.contains(target);
     }
 
     public static ArrayList<String> generateCoolNumbers() {
@@ -43,9 +54,12 @@ public class Main {
                 for (char first : letters) {
                     for (char two : letters) {
                         for (int region = 0; region <= 199; region++) {
-                            result.append(letter).append(digit).append(digit).append(digit).append(first).append(two).append(region < 10? "0" + region : region);
+                            result.append(letter).append(digit).append(digit).append(digit).append(first).append(two).append(region < 10 ? "0" + region : region);
                             list.add(result.toString());
                             result.setLength(0);
+                            if (list.size() >= 3_000_000) {
+                                return list;
+                            }
 
                         }
                     }
