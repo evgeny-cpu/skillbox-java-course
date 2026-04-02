@@ -1,5 +1,5 @@
 public class BankAccount {
-    protected double balance = 0;
+    private double balance = 0;
 
 
     public boolean put(double count) {
