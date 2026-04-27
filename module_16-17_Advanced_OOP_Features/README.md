@@ -30,3 +30,39 @@ List<Employee> sortedEmployees = employees.stream()
         .comparing(Employee::getSalary)
         .thenComparing(Employee::getName))
     .collect(Collectors.toList());
+
+
+# ✈️ Поиск рейсов в аэропорту с помощью Stream API
+
+Задача 3: Реализовать метод, который возвращает список рейсов, вылетающих в ближайшие два часа, используя **Lambda выражения** и **Stream API**.
+
+---
+
+## 🎯 Цель задания
+
+Закрепить на практике навыки работы с:
+- Lambda-выражениями
+- Stream API (filter, collect, map)
+- Работой с датой и временем (LocalDateTime)
+- Использованием сторонних библиотек
+
+---
+
+## 📦 Используемая библиотека
+
+**com.skillbox.airport** — библиотека, предоставляющая данные об аэропорте.
+
+### Основные классы:
+
+| Класс | Описание |
+|:------|:---------|
+| `Airport` | Синглтон, содержащий список всех рейсов |
+| `Flight` | Информация о рейсе (номер, тип, дата/время) |
+| `Flight.Type` | Тип рейса: `ARRIVAL` (прилёт) или `DEPARTURE` (вылет) |
+| `LocalDateTime` | Дата и время вылета/прилёта (Java Time API) |
+
+### Получение данных:
+
+```java
+Airport airport = Airport.getInstance();
+List<Flight> allFlights = airport.getFlights();
