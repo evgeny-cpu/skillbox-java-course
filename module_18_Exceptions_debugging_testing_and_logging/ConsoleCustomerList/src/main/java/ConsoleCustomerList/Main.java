@@ -1,11 +1,22 @@
 package ConsoleCustomerList;
 
+import ConsoleCustomerList.exception.*;
+
 import java.util.Scanner;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class Main {
+    public static final Logger logger = LogManager.getLogger(Main.class);
+    public static final Logger searchLogger = LogManager.getLogger("searchLogger");
+    public static final Logger exceptionsLogger = LogManager.getLogger("exceptionsLogger");
+
     public static void main(String[] args) {
         CustomerStorage customerStorage = new CustomerStorage();
         Scanner scanner = new Scanner(System.in);
+
+        searchLogger.info("Программа запущена");
 
         System.out.println("Список доступных команды");
         System.out.println("add - добавить пользователя (Формат: имя телефон почта)");
@@ -18,10 +29,11 @@ public class Main {
 
         while (true) {
             String text = scanner.nextLine().trim();
-            if (text.isEmpty()){
+            if (text.isEmpty()) {
                 continue;
             }
             if (text.equals("exit")) {
+                logger.info("Программа завершена");
                 break;
             }
 
@@ -33,8 +45,10 @@ public class Main {
                 } catch (InvalidCommandFormatException | InvalidPhoneNumberException | InvalidEmailException |
                          DuplicateCustomerException e) {
                     System.out.println("Ошибка: " + e.getMessage());
+                    logger.error("Ошибка при добавлении клиента: {}", e.getMessage());
                 } catch (Exception e) {
                     System.out.println("Неизвестная ошибка: " + e.getMessage());
+                    logger.error("Неизвестная ошибка при добавлении клиента: {}", e.getMessage());
                 }
             } else if (text.equals("list")) {
                 if (customerStorage.getCustomerList().isEmpty()) {
@@ -57,21 +71,23 @@ public class Main {
                     } else {
                         System.out.println("Такого клиента нет.");
                     }
-                } catch (InvalidCommandFormatException | InvalidPhoneNumberException | InvalidEmailException | DuplicateCustomerException e) {
+                } catch (InvalidCommandFormatException | InvalidPhoneNumberException | InvalidEmailException |
+                         DuplicateCustomerException e) {
                     System.out.println("Ошибка: " + e.getMessage());
+                    logger.error("Ошибка при обновлении клиента: {}", e.getMessage());
                 }
             } else if (text.startsWith("delete ")) {
                 String phone = text.substring(7).trim();
                 if (phone.isEmpty()) {
                     System.out.println("Ошибка: Укажите номер телефона");
-                }else if (customerStorage.delete(phone)) {
+                } else if (customerStorage.delete(phone)) {
                     System.out.println("Клиент удалён - " + phone);
                 } else {
                     System.out.println("Клиента нет в списке");
                 }
-            }else{
+            } else {
                 System.out.println("Неизвестная команда.");
+            }
         }
     }
-}
 }
